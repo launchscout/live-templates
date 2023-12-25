@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <style>
+    body {
+      background: #fafafa;
+    }
+  </style>
+</head>
+<body>
+  <div id="demo"></div>
+
+  <script type="module">
+    import { html, render } from 'lit';
+    import '../live-template.js';
+
+    const header = 'Hello owc World!';
+    render(
+      html`
+        <live-template .header=${header}>
+          some light-dom
+        </live-template>
+      `,
+      document.querySelector('#demo')
+    );
+  </script>
+</body>
+</html>
