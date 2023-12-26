@@ -1,10 +1,10 @@
 # `<live-template>`
 
-A `<live-template>` connects a template to a state source (currently provided by [LiveState] ). After connecting to a LiveState backend, it will:
+A `<live-template>` element connects a template to a state source (currently provided by [LiveState] ). After connecting to a LiveState channel, it will:
 
 * render the initial state
-* subscribe to state changes and re-renders
-* pushes events to the state source which may then compute a new state
+* subscribe to state updates and re-render on changes
+* pushes events to a Livestate backend which may then compute a new state
 
 ## Getting started
 
@@ -14,9 +14,9 @@ The easiest way to start is to open an html file and add a `<live-template>` ele
 
 ```html
 <script src=""></script>
-<live-template url="wss://live-template-example.fly.dev" topic="todos">
+<live-template url="wss://live-template-example.fly.dev/live_state" topic="todos">
   <ul>
-    <li :each={{todo in todos}}>
+    <li :each={{todo in todos}}>{{todo}}</li>
   </ul>
 
   <form onsubmit={{send('add-todo')}}>
@@ -27,11 +27,11 @@ The easiest way to start is to open an html file and add a `<live-template>` ele
 </live-template>
 ```
 
-You should be to open this file in your browser and it will connect to the example app backend.
+You should be to open this file in your browser and it will connect to the example app backend. Feel free to experiment!
 
 ## How it works
 
-<live-templates> are designed to connect to a LiveState backend. LiveState is built on the same excellent technology stack that powers LiveView: Phoenix Channels, Phoenix, Elixir, and Erlang. This allows us to host the persistent conversational state of every user connected to a LiveTemplate application in a way that scales efficiently across millions of connected users. 
+The `<live-template>` element is designed to connect to a LiveState backend. LiveState is built on the same excellent technology stack that powers LiveView: Phoenix Channels, Phoenix, Elixir, and Erlang. This allows us to host the persistent conversational state of every user connected to a LiveTemplate application in a way that scales efficiently across millions of connected users. 
 
 ## Installation
 
@@ -52,7 +52,7 @@ Add a `<live-template>` element. Required attributes are:
 
 ## Template syntax
 
-The template syntax is provided by the [templize]() library. Expressions are surrounded by `{{}}` and may contain the following:
+The template syntax is provided by the [templize](https://github.com/dy/templize) library. Expressions are surrounded by `{{}}`. See templize docs for all supported feature.
 
 ## Sending events
 
