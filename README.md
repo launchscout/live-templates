@@ -1,15 +1,14 @@
 # `<live-template>`
 
-The `<live-template>` provides a connected, or "live" template that connects to a stateful backend application provided by Livesate. 
-A `<live-template>` element connects a template to a state source (currently provided by [LiveState] ). After connecting to a LiveState channel, it will:
+The `<live-template>` element provides a connected, or "live" template that connects to a stateful backend application provided by [Livesate](https://github.com/launchscout/live_state). After connecting to a LiveState channel, it will:
 
 * render the initial state
 * subscribe to state updates and re-render on changes
-* pushes events to a Livestate backend which may then compute a new state
+* push events to a Livestate channel which may then compute a new state
 
 ## Getting started
 
-Live templates are primarily designed to add dynamic functionality to a static html website. It provides a similar experience to technologies like LiveView, but with no opinions on back end hosting environment: (eg, it doesn't matter where your html is served). 
+Live templates are primarily designed to add dynamic functionality to a static html website. The provide similar experience to technologies like LiveView, but with no opinions on back end hosting environment: (eg, it doesn't matter where your html is served). 
 
 The easiest way to start is to open an html file and add a `<live-template>` element. You can try this with the example below:
 
@@ -28,11 +27,11 @@ The easiest way to start is to open an html file and add a `<live-template>` ele
 </live-template>
 ```
 
-You should be to open this file in your browser and it will connect to the example app backend. Feel free to experiment!
+Any http server capable of serving html files should be able to serve this "web app". `npx http-server .` should suffice.
 
 ## How it works
 
-The `<live-template>` element is designed to connect to a LiveState backend. LiveState is built on the same excellent technology stack that powers LiveView: Phoenix Channels, Phoenix, Elixir, and Erlang. This allows us to host the persistent conversational state of every user connected to a LiveTemplate application in a way that scales efficiently across millions of connected users. 
+The `<live-template>` element connects to a LiveState backend. LiveState is built on the same excellent technology stack that powers LiveView: Phoenix Channels, Phoenix, Elixir, and Erlang. This allows us to host the persistent conversational state of every user connected to a LiveTemplate application in a way that scales efficiently across millions of connected users. 
 
 ## Installation
 
