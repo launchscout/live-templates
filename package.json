@@ -14,7 +14,7 @@
     "test:watch": "web-test-runner --watch"
   },
   "dependencies": {
-    "phx-live-state": ">= 0.0.0",
+    "phx-live-state": "file:../phx-live-state",
     "templize": "^2.4.4"
   },
   "devDependencies": {

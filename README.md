@@ -1,5 +1,6 @@
 # `<live-template>`
 
+The `<live-template>` provides a connected, or "live" template that connects to a stateful backend application provided by Livesate. 
 A `<live-template>` element connects a template to a state source (currently provided by [LiveState] ). After connecting to a LiveState channel, it will:
 
 * render the initial state

@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <script async src="https://ga.jspm.io/npm:es-module-shims@1.8.2/dist/es-module-shims.js" crossorigin="anonymous"></script>
+    <script type="importmap">
+    {
+      "imports": {
+        "phx-live-state": "../phx-live-state/build/src/index.js",
+        "templize/templize.js": "https://ga.jspm.io/npm:templize@2.4.4/templize.js"
+      },
+      "scopes": {
+        "../phx-live-state/": {
+          "json-joy/esm/json-patch": "https://ga.jspm.io/npm:json-joy@1.19.0/esm/json-patch/index.js",
+          "phoenix": "https://ga.jspm.io/npm:phoenix@1.6.15/priv/static/phoenix.mjs",
+          "reflect-metadata": "https://ga.jspm.io/npm:reflect-metadata@0.1.14/Reflect.js",
+          "subscript": "https://ga.jspm.io/npm:subscript@7.4.6/subscript.js",
+          "wc-context": "https://ga.jspm.io/npm:wc-context@1.0.0/core.js"
+        },
+        "https://ga.jspm.io/": {
+          "element-props": "https://ga.jspm.io/npm:element-props@2.6.0/element-props.js",
+          "process": "https://ga.jspm.io/npm:@jspm/core@2.0.1/nodelibs/browser/process.js",
+          "sube": "https://ga.jspm.io/npm:sube@2.3.0/sube.js",
+          "subscript": "https://ga.jspm.io/npm:subscript@7.4.6/subscript.js",
+          "subscript/parse.js": "https://ga.jspm.io/npm:subscript@7.4.6/parse.js",
+          "template-parts": "https://ga.jspm.io/npm:template-parts@1.0.5/template-parts.js"
+        }
+      }
+    }
+    </script>
+    <script type="module" src="./src/live-template.js"></script>
+  </head>
+  <live-template url="ws://localhost:4000/live_state" topic="todo:all">
+    <ul>
+      <li :each="{{todo in todos}}">{{todo}}</li>
+    </ul>
+  </live-template>
+</html>
