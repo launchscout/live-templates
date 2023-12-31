@@ -8,13 +8,12 @@ The `<live-template>` element provides a connected, or "live" template that conn
 
 ## Getting started
 
-Live templates are primarily designed to add dynamic functionality to a static html website. The provide similar experience to technologies like LiveView, but with no opinions on back end hosting environment: (eg, it doesn't matter where your html is served). 
+Live templates are primarily designed to add dynamic functionality to a static html website. The provide a similar experience to technologies like LiveView, but with no opinions on back end hosting environment: (eg, it doesn't matter where your html is served). 
 
-The easiest way to start is to open an html file and add a `<live-template>` element. You can try this with the example below:
+The easiest way to start is to open an html file and add a `<live-template>` element. Here's an example of what this looks like:
 
 ```html
-<script src=""></script>
-<live-template url="wss://live-template-example.fly.dev/live_state" topic="todos">
+<live-template url="wss://live-template-example.fly.dev/live_state" topic="todo:all">
   <ul>
     <li :each={{todo in todos}}>{{todo}}</li>
   </ul>
@@ -27,7 +26,9 @@ The easiest way to start is to open an html file and add a `<live-template>` ele
 </live-template>
 ```
 
-Any http server capable of serving html files should be able to serve this "web app". `npx http-server .` should suffice.
+In this example, the template will connect to a LiveState channel at the specified url and topic. In this case the channel will send an initial state with a single item, and will handle the `add-todo` event to add items to the list, which will then be pushed down as a state update. `live-template` will convert the form submit event to a custom event of the specified name using the form data as a payload (see below).
+
+This example is included in the `index.html` file in this repo. Run `npm start` to serve it up using a simple http server. Note that no transformation or build is occuring. Instead, an import map is used to resolve all the dependencies. Big shout out to [jspm](https://jspm.org) for making this easy!
 
 ## How it works
 
@@ -41,7 +42,7 @@ You can install locally using npm:
 npm install live-template
 ```
 
-Alternatively, you can use a script tag to fetch it from your favorite npm CDN:
+You can also use `live-template` without any build tool at all by using an [import map]()
 
 ## Usage
 
