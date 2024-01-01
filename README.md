@@ -42,7 +42,7 @@ You can install locally using npm:
 npm install live-template
 ```
 
-You can also use `live-template` without any build tool at all by using an [import map]()
+You can also use `live-template` without any build tool at all by using an [import map](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type/importmap). See index.html for a working example.
 
 ## Usage
 
@@ -53,7 +53,7 @@ Add a `<live-template>` element. Required attributes are:
 
 ## Template syntax
 
-The template syntax is provided by the [templize](https://github.com/dy/templize) library. Expressions are surrounded by `{{}}`. See templize docs for all supported feature.
+The template syntax is provided by the [templize](https://github.com/dy/templize) library. Expressions are surrounded by `{{}}`. See templize docs for all supported expressions and features.
 
 ## Sending events
 
