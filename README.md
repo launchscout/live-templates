@@ -28,11 +28,32 @@ The easiest way to start is to open an html file and add a `<live-template>` ele
 
 In this example, the template will connect to a LiveState channel at the specified url and topic. In this case the channel will send an initial state with a single item, and will handle the `add-todo` event to add items to the list, which will then be pushed down as a state update. `live-template` will convert the form submit event to a custom event of the specified name using the form data as a payload (see below).
 
-This example is included in the `index.html` file in this repo. Run `npm start` to serve it up using a simple http server. Note that no transformation or build is occuring. Instead, an import map is used to resolve all the dependencies. Big shout out to [jspm](https://jspm.org) for making this easy!
+The channel code looks like this:
+
+```elixir
+defmodule LiveTemplatesExampleWeb.TodoChannel do
+  @moduledoc false
+
+  use LiveState.Channel, web_module: LiveTemplatesExampleWeb
+
+  @impl true
+  def init(_channel, _params, _socket) do
+    {:ok, %{todos: ["Add an item"]}}
+  end
+
+  @impl true
+  def handle_event("add-todo", %{"todo" => todo}, %{todos: todos} = state) do
+    {:noreply, Map.put(state, :todos, todos ++ [todo])}
+  end
+
+end
+```
+
+This example is included in the `index.html` file in this repo and is also deployed as a [codepen](https://codepen.io/superchris-the-lessful/pen/GRepMGe). Locally, you can `npm start` to serve it up using a simple http server. Note that no transformation or build is occuring. Instead, an import map is used to resolve all the dependencies. Big shout out to [jspm](https://jspm.org) for making this easy!
 
 ## How it works
 
-The `<live-template>` element connects to a LiveState backend. LiveState is built on the same excellent technology stack that powers LiveView: Phoenix Channels, Phoenix, Elixir, and Erlang. This allows us to host the persistent conversational state of every user connected to a LiveTemplate application in a way that scales efficiently across millions of connected users. 
+The `<live-template>` element connects to a [LiveState](https://github.com/launchscout/live_state) backend. LiveState is built on the same excellent technology stack that powers LiveView: Phoenix Channels, Phoenix, Elixir, and Erlang. This allows us to host the persistent conversational state of every user connected to a LiveTemplate application in a way that scales efficiently across millions of connected users. 
 
 ## Installation
 
