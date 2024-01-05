@@ -84,6 +84,19 @@ To send events to a LiveState backend, the `send()` function is provided and abl
 * click events will send the dataset of the element (any `data-` attributes).
 * (more to come)
 
+## Adding fallback content and avoiding early renders
+
+To avoid the content of your live-template appearing before there is data, you can wrap your content in a template element like so:
+
+```html
+<live-template>
+  <template>here is a {{thing}} thats get rendered when connected</template>
+  <div>this is what will be rendered before connection</div>
+</live-template>
+```
+
+This will let you avoid the template rendering in an unevaluated "raw" state before the connection to LiveState happens. It will also let you add "fallback" content that will render before the connection is established.
+
 ## Status
 
 live-templates should be considered alpha quality. Template implementation uses templize which itself tracks the W3C work to standardize template instantiation. Because this work is ongoing, future syntax and implementation is subject to change.

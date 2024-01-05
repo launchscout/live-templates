@@ -64,4 +64,19 @@ describe('render template', () => {
     expect(pushCall.args[1].bar).to.equal('wuzzle');
   });
 
+  it('allows for nested templates and fallback content', async () => {
+    const el = await fixture(`
+    <live-template>
+      <div>fall back!</div>
+      <template>
+        {{foo}}
+      </template>
+    </live-template>
+    `)
+    expect(el.innerHTML).to.contain('fall back!');
+    setupLiveState(el);
+    expect(el.innerHTML).to.contain('bar');
+    expect(el.innerHTML).not.to.contain('fall back!');
+  });
+
 });

@@ -1,5 +1,6 @@
 import templize, {directive} from 'templize/templize.js';
 import LiveState from 'phx-live-state';
+import { parse, NodeTemplatePart, TemplateInstance } from 'template-parts'
 
 export class LiveTemplateElement extends HTMLElement {
   connectedCallback() {
@@ -19,12 +20,23 @@ export class LiveTemplateElement extends HTMLElement {
         this.updater(state);
       } else {
         const send = (eventName) => (e) => this.sendEvent(eventName, e);
-        const [params, update] = templize(this, { ...state, send });
+        const [params, update] = this.buildTemplate({ ...state, send });
         this.updater = update;
       }
     });
   }
 
+  buildTemplate(state) {
+    const template = this.querySelector("template");
+    if (template) {
+      const tpl = templize(template.content, state);
+      this.replaceChildren(template.content);
+      return tpl;
+    } else {
+      return templize(this, state)
+    }
+  }
+  
   sendEvent(eventName, e) {
     if (e instanceof SubmitEvent) {
       const form = e.target;
