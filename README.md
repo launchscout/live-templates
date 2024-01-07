@@ -1,6 +1,6 @@
 # `<live-template>`
 
-The `<live-template>` element provides a connected, or "live" template that connects to a stateful backend application provided by [Livesate](https://github.com/launchscout/live_state). After connecting to a LiveState channel, it will:
+The `<live-template>` element provides a connected, or "live" template that connects to a stateful backend application provided by [Livestate](https://github.com/launchscout/live_state). After connecting to a LiveState channel, it will:
 
 * render the initial state
 * subscribe to state updates and re-render on changes
