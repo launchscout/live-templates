@@ -101,7 +101,31 @@ This will let you avoid the template rendering in an unevaluated "raw" state bef
 
 ## Context
 
-If you have multiple `<live-template>` elements, you can have them share a `LiveState` instance using the [context protocol](https://github.com/webcomponents-cg/community-protocols/blob/main/proposals/context.md). To do so, use the `provide-context` attribute on an instance that specifies a `url` and `topic` attribute. This element will then register its LiveState instance using the value of this attribute, as well as setting a property of `window` (the value being used as the propery name). On another `<live-template>` instance you can use the `consume-context` attribute with the same name passed in to the other instances `provide-context` attribute. For the consuming instance, there is no need to specify url and topic as it will not be used. See the test cases for an example.
+If you have multiple `<live-template>` elements, you can have them share a `LiveState` instance using the [context protocol](https://github.com/webcomponents-cg/community-protocols/blob/main/proposals/context.md). To do so, use the `provide-context` attribute on an instance that specifies a `url` and `topic` attribute. This element will then register its LiveState instance using the value of this attribute, as well as setting a property of `window` (the value being used as the propery name). On another `<live-template>` instance you can use the `consume-context` attribute with the same name passed in to the other instances `provide-context` attribute. For the consuming instance, there is no need to specify url and topic as it will not be used.
+
+Example:
+
+```html
+  <body>
+    <live-template url="ws://localhost:4000/socket" topic="todo:all" provide-context="mrstate">
+      <template>
+        <ul>
+          <li :each="{{todo in todos}}">{{todo}}</li>
+        </ul>
+        <form onsubmit={{send('add-todo')}}>
+          <label>Todo item</label>
+          <input name="todo" />
+          <button>Add todo</button>
+        </form>
+      </template>
+      <div>some fallback content</div>
+    </live-template>
+    <live-template consume-context="mrstate">
+
+      <div :each="{{todo in todos}}">{{todo}}</div>
+    </live-template>
+  </body>
+```
 
 ## Status
 
