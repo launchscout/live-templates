@@ -72,11 +72,39 @@ describe('render template', () => {
         {{foo}}
       </template>
     </live-template>
+
     `)
     expect(el.innerHTML).to.contain('fall back!');
     setupLiveState(el);
     expect(el.innerHTML).to.contain('bar');
     expect(el.innerHTML).not.to.contain('fall back!');
+  });
+
+  it('can share livestate instance using context', async () => {
+    const el = await fixture(`
+    <div>
+      <live-template provide-context="daState" url="ws://localhost:4000" topic="wut" id="provider">
+        {{foo}}
+      </live-template>
+      <live-template consume-context="daState" id="consumer">
+        {{foo}}
+      </live-template>
+    </div>
+    `)
+    const provider = el.querySelector('#provider');
+    const liveState = provider.liveState;
+    expect(liveState).to.exist;
+    liveState.connect = sinon.stub();
+    provider.connectLiveState();
+    liveState.eventTarget.dispatchEvent(new CustomEvent('livestate-change', {
+      detail: {
+        state: {foo: 'bar'},
+        version: 1
+      }
+    }));
+    const consumer = el.querySelector('#consumer');
+    expect(provider.innerHTML).to.contain('bar');
+    expect(consumer.innerHTML).to.contain('bar');
   });
 
 });

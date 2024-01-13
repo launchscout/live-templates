@@ -67,10 +67,12 @@ You can also use `live-template` without any build tool at all by using an [impo
 
 ## Usage
 
-Add a `<live-template>` element. Required attributes are:
+Add a `<live-template>` element. Connection attributes are:
 
 * url: a WebSocket (ws: or wss:) url to connect to
 * topic: the topic of the phoenix channel providing the state
+
+These attributes are required unless `consume-context` is specified (see below).
 
 ## Template syntax
 
@@ -96,6 +98,10 @@ To avoid the content of your live-template appearing before there is data, you c
 ```
 
 This will let you avoid the template rendering in an unevaluated "raw" state before the connection to LiveState happens. It will also let you add "fallback" content that will render before the connection is established.
+
+## Context
+
+If you have multiple `<live-template>` elements, you can have them share a `LiveState` instance using the [context protocol](https://github.com/webcomponents-cg/community-protocols/blob/main/proposals/context.md). To do so, use the `provide-context` attribute on an instance that specifies a `url` and `topic` attribute. This element will then register its LiveState instance using the value of this attribute, as well as setting a property of `window` (the value being used as the propery name). On another `<live-template>` instance you can use the `consume-context` attribute with the same name passed in to the other instances `provide-context` attribute. For the consuming instance, there is no need to specify url and topic as it will not be used. See the test cases for an example.
 
 ## Status
 
