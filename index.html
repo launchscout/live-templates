@@ -4,9 +4,10 @@
     <script type="importmap">
     {
       "imports": {
-        "phx-live-state": "https://ga.jspm.io/npm:phx-live-state@0.11.1/build/src/index.js",
+        "phx-live-state": "https://ga.jspm.io/npm:phx-live-state@0.11.2/build/src/index.js",
         "template-parts": "https://ga.jspm.io/npm:template-parts@1.0.5/template-parts.js",
-        "templize/templize.js": "https://ga.jspm.io/npm:templize@2.4.4/templize.js"
+        "templize/templize.js": "https://ga.jspm.io/npm:templize@2.4.4/templize.js",
+        "wc-context": "https://ga.jspm.io/npm:wc-context@1.0.0/core.js"
       },
       "scopes": {
         "https://ga.jspm.io/": {
@@ -17,8 +18,7 @@
           "reflect-metadata": "https://ga.jspm.io/npm:reflect-metadata@0.1.14/Reflect.js",
           "sube": "https://ga.jspm.io/npm:sube@2.3.0/sube.js",
           "subscript": "https://ga.jspm.io/npm:subscript@7.4.6/subscript.js",
-          "subscript/parse.js": "https://ga.jspm.io/npm:subscript@7.4.6/parse.js",
-          "wc-context": "https://ga.jspm.io/npm:wc-context@1.0.0/core.js"
+          "subscript/parse.js": "https://ga.jspm.io/npm:subscript@7.4.6/parse.js"
         }
       }
     }
@@ -28,7 +28,7 @@
     </script>
   </head>
   <body>
-    <live-template url="wss://live-templates-example.fly.dev/live_state" topic="todo:all">
+    <live-template url="ws://localhost:4000/socket" topic="todo:all" provide-context="mrstate">
       <template>
         <ul>
           <li :each="{{todo in todos}}">{{todo}}</li>
@@ -40,6 +40,10 @@
         </form>
       </template>
       <div>some fallback content</div>
+    </live-template>
+    <live-template consume-context="mrstate">
+
+      <div :each="{{todo in todos}}">{{todo}}</div>
     </live-template>
   </body>
 </html>
