@@ -10,7 +10,7 @@
   "scripts": {
     "analyze": "cem analyze --litelement",
     "start": "http-server .",
-    "test": "web-test-runner --coverage",
+    "test": "web-test-runner",
     "test:watch": "web-test-runner --watch"
   },
   "dependencies": {
@@ -22,7 +22,7 @@
   "devDependencies": {
     "@custom-elements-manifest/analyzer": "^0.4.17",
     "@open-wc/testing": "^3.1.6",
-    "@web/test-runner": "^0.14.0",
+    "@web/test-runner": "^0.18.0",
     "phoenix": "^1.7.10",
     "sinon": "^17.0.1"
   },
