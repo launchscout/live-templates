@@ -1,9 +1,8 @@
-import '../src/live-template';
 import { expect } from "@esm-bundle/chai";
 import { fixture } from '@open-wc/testing';
 import sinon from 'sinon';
-import { Channel } from 'phoenix';
 import LiveState from 'phx-live-state';
+import '../src/live-template';
 
 const setupLiveState = (el) => {
   el.liveState = new LiveState({url: 'ws://localhost:4000', topic: 'foo'});
