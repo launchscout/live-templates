@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "http-server": "^14.1.1",
-    "phx-live-state": "0.11.2",
+    "phx-live-state": "^0.11.2",
     "templize": "^2.4.4",
     "wc-context": "^1.0.0"
   },
