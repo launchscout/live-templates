@@ -1,7 +1,7 @@
 import { expect } from "@esm-bundle/chai";
 import { fixture } from '@open-wc/testing';
 import sinon from 'sinon';
-import LiveState from 'phx-live-state';
+import { LiveState } from 'phx-live-state';
 import '../src/live-template';
 
 const setupLiveState = (el) => {
