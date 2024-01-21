@@ -2,6 +2,7 @@ import templize, {directive} from 'templize/templize.js';
 import LiveState from 'phx-live-state';
 import { registerContext, observeContext } from 'wc-context';
 import { parse, NodeTemplatePart, TemplateInstance } from 'template-parts'
+import sprae from 'sprae';
 
 export class LiveTemplateElement extends HTMLElement {
   connectedCallback() {
@@ -28,24 +29,15 @@ export class LiveTemplateElement extends HTMLElement {
   connectLiveState() {
     this.liveState.connect();
     this.liveState.addEventListener('livestate-change', ({ detail: { state } }) => {
-      if (this.updater) {
-        this.updater(state);
-      } else {
-        const send = (eventName) => (e) => this.sendEvent(eventName, e);
-        const [params, update] = this.buildTemplate({ ...state, send });
-        this.updater = update;
-      }
+      this.buildTemplate();
+      sprae(this, {...state, sendEvent: (n, e) => this.sendEvent(n, e)});
     });
   }
 
-  buildTemplate(state) {
+  buildTemplate() {
     const template = this.querySelector("template");
     if (template) {
-      const tpl = templize(template.content, state);
       this.replaceChildren(template.content);
-      return tpl;
-    } else {
-      return templize(this, state)
     }
   }
   

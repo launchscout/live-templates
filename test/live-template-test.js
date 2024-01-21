@@ -21,7 +21,7 @@ describe('render template', () => {
   it('renders state from liveState', async () => {
     const el = await fixture(`
     <live-template>
-      {{foo}}
+      <span :text="foo"></span>
     </live-template>
     `);
     setupLiveState(el);
@@ -31,7 +31,7 @@ describe('render template', () => {
   it('sends click events', async () => {
     const el = await fixture(`
     <live-template>
-      <button data-thing="wut" onclick={{send('wuzzle')}}></button>
+      <button data-thing="wut" @click="sendEvent('wuzzle', event)"></button>
     </live-template>
     `);
     setupLiveState(el);    
@@ -46,7 +46,7 @@ describe('render template', () => {
   it('sends form events', async () => {
     const el = await fixture(`
     <live-template>
-      <form onsubmit={{send('it')}}>
+      <form @submit="sendEvent('it', event)">
         <input name="foo" value="bar" />
         <input name="bar" value="wuzzle" />
         <button type="submit">save</button>
@@ -69,7 +69,7 @@ describe('render template', () => {
     <live-template>
       <div>fall back!</div>
       <template>
-        {{foo}}
+        <span :text="foo"></span>
       </template>
     </live-template>
 
@@ -84,10 +84,10 @@ describe('render template', () => {
     const el = await fixture(`
     <div>
       <live-template provide-context="daState" url="ws://localhost:4000" topic="wut" id="provider">
-        {{foo}}
+        <span :text="foo"></span>
       </live-template>
       <live-template consume-context="daState" id="consumer">
-        {{foo}}
+        <span :text="foo"></span>
       </live-template>
     </div>
     `)

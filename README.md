@@ -15,12 +15,11 @@ The easiest way to start is to open an html file and add a `<live-template>` ele
 ```html
 <live-template url="wss://live-template-example.fly.dev/live_state" topic="todo:all">
   <ul>
-    <li :each={{todo in todos}}>{{todo}}</li>
+    <li :each="todo in todos" :text="todo">
   </ul>
-
-  <form onsubmit={{send('add-todo')}}>
+  <form @submit="sendEvent('add-todo', event)">
     <label>Todo item</label>
-    <input name="todo" />
+    <input :value="new_todo" name="todo" />
     <button>Add todo</button>
   </form>
 </live-template>
@@ -76,11 +75,17 @@ These attributes are required unless `consume-context` is specified (see below).
 
 ## Template syntax
 
-The template syntax is provided by the [templize](https://github.com/dy/templize) library. Expressions are surrounded by `{{}}`. See templize docs for all supported expressions and features.
+The template syntax is provided by the [sprae](https://github.com/dy/sprae) library. Earlier versions used templize, which is no longer supported by the author. Expressions are set on elements special attributes such as:
+
+* `:each` to repeat
+* `:text` to set a value
+* `@click`, `@submit` to attach event handlers
+
+There a quite a few more, for the full list see the [sprae README](https://github.com/dy/sprae)
 
 ## Sending events
 
-To send events to a LiveState backend, the `send()` function is provided and able to be called from event handlers in the template. It expects an event name as an argument. It will convert DOM events as follows:
+To send events to a LiveState backend, the `sendEvent()` function is provided and able to be called from event handlers in the template. It expects an event name and event as arguments. It will convert DOM events as follows:
 
 * submit and input events will send the FormData and prevent the default event behaviour.
 * click events will send the dataset of the element (any `data-` attributes).
@@ -107,26 +112,30 @@ Example:
 
 ```html
   <body>
-    <live-template url="ws://localhost:4000/socket" topic="todo:all" provide-context="mrstate">
+    <live-template url="ws://localhost:4000/live_state" topic="todo:all" provide-context="mrstate">
       <template>
         <ul>
-          <li :each="{{todo in todos}}">{{todo}}</li>
+          <li :each="todo in todos" :text="todo">
         </ul>
-        <form onsubmit={{send('add-todo')}}>
+        <form @submit="sendEvent('add-todo', event)">
           <label>Todo item</label>
-          <input name="todo" />
+          <input :value="new_todo" name="todo" />
           <button>Add todo</button>
         </form>
       </template>
       <div>some fallback content</div>
     </live-template>
     <live-template consume-context="mrstate">
-
-      <div :each="{{todo in todos}}">{{todo}}</div>
+      <div :each="todo in todos" :text="todo"></div>
     </live-template>
   </body>
 ```
 
 ## Status
 
-live-templates should be considered alpha quality. Template implementation uses templize which itself tracks the W3C work to standardize template instantiation. Because this work is ongoing, future syntax and implementation is subject to change.
+live-templates should be considered alpha quality.
+
+## Future plans
+
+* Support multiple templating implementations if desired (add an issue to support your favorite!)
+* More examples

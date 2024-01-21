@@ -4,33 +4,33 @@
     <script type="importmap">
     {
       "imports": {
-        "phx-live-state": "../phx-live-state/build/src/index.js",
-        "templize/templize.js": "https://ga.jspm.io/npm:templize@2.4.4/templize.js"
+        "phx-live-state": "https://ga.jspm.io/npm:phx-live-state@0.11.2/build/src/index.js",
+        "sprae": "https://ga.jspm.io/npm:sprae@8.1.3/src/index.js",
+        "template-parts": "https://ga.jspm.io/npm:template-parts@1.0.5/template-parts.js",
+        "templize/templize.js": "https://ga.jspm.io/npm:templize@2.4.4/templize.js",
+        "wc-context": "https://ga.jspm.io/npm:wc-context@1.0.0/core.js"
       },
       "scopes": {
-        "../phx-live-state/": {
+        "https://ga.jspm.io/": {
+          "@preact/signals-core": "https://ga.jspm.io/npm:@preact/signals-core@1.5.1/dist/signals-core.module.js",
+          "element-props": "https://ga.jspm.io/npm:element-props@2.6.0/element-props.js",
           "json-joy/esm/json-patch": "https://ga.jspm.io/npm:json-joy@1.19.0/esm/json-patch/index.js",
           "phoenix": "https://ga.jspm.io/npm:phoenix@1.6.15/priv/static/phoenix.mjs",
-          "reflect-metadata": "https://ga.jspm.io/npm:reflect-metadata@0.1.14/Reflect.js",
-          "subscript": "https://ga.jspm.io/npm:subscript@7.4.6/subscript.js",
-          "wc-context": "https://ga.jspm.io/npm:wc-context@1.0.0/core.js"
-        },
-        "https://ga.jspm.io/": {
-          "element-props": "https://ga.jspm.io/npm:element-props@2.6.0/element-props.js",
           "process": "https://ga.jspm.io/npm:@jspm/core@2.0.1/nodelibs/browser/process.js",
+          "reflect-metadata": "https://ga.jspm.io/npm:reflect-metadata@0.1.14/Reflect.js",
           "sube": "https://ga.jspm.io/npm:sube@2.3.0/sube.js",
-          "subscript": "https://ga.jspm.io/npm:subscript@7.4.6/subscript.js",
-          "subscript/parse.js": "https://ga.jspm.io/npm:subscript@7.4.6/parse.js",
-          "template-parts": "https://ga.jspm.io/npm:template-parts@1.0.5/template-parts.js"
+          "subscript": "https://ga.jspm.io/npm:subscript@7.5.5/subscript.js",
+          "subscript/parse.js": "https://ga.jspm.io/npm:subscript@7.5.5/parse.js"
         }
       }
     }
     </script>
     <script type="module" src="./src/live-template.js"></script>
   </head>
-  <live-template url="ws://localhost:4000/live_state" topic="todo:all">
+  <live-template url="ws://localhost:4000/socket" topic="todo:all">
     <ul>
-      <li :each="{{todo in todos}}">{{todo}}</li>
+      <li :each="todo in todos" :text="todo"></li>
     </ul>
+    <button @click="sendEvent('bob', event)">butt</button>
   </live-template>
 </html>
