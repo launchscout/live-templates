@@ -17,7 +17,7 @@ The easiest way to start is to open an html file and add a `<live-template>` ele
   <ul>
     <li :each="todo in todos" :text="todo">
   </ul>
-  <form @submit="sendEvent('add-todo', event)">
+  <form :onsubmit="sendEvent('add-todo')">
     <label>Todo item</label>
     <input :value="new_todo" name="todo" />
     <button>Add todo</button>
@@ -79,13 +79,13 @@ The template syntax is provided by the [sprae](https://github.com/dy/sprae) libr
 
 * `:each` to repeat
 * `:text` to set a value
-* `@click`, `@submit` to attach event handlers
+* `:onlick`, `:onsubmit` to attach event handlers
 
 There a quite a few more, for the full list see the [sprae README](https://github.com/dy/sprae)
 
 ## Sending events
 
-To send events to a LiveState backend, the `sendEvent()` function is provided and able to be called from event handlers in the template. It expects an event name and event as arguments. It will convert DOM events as follows:
+To send events to a LiveState backend, the `sendEvent()` function is provided and able to be called from event handlers in the template. It takes the name of the event to send to the channel, and will convert DOM events as follows:
 
 * submit and input events will send the FormData and prevent the default event behaviour.
 * click events will send the dataset of the element (any `data-` attributes).
@@ -97,7 +97,7 @@ To avoid the content of your live-template appearing before there is data, you c
 
 ```html
 <live-template>
-  <template>here is a {{thing}} thats get rendered when connected</template>
+  <template>here is a <span :text="thing">thing</span> thats get rendered when connected</template>
   <div>this is what will be rendered before connection</div>
 </live-template>
 ```
@@ -117,7 +117,7 @@ Example:
         <ul>
           <li :each="todo in todos" :text="todo">
         </ul>
-        <form @submit="sendEvent('add-todo', event)">
+        <form :onsubmit="sendEvent('add-todo')">
           <label>Todo item</label>
           <input :value="new_todo" name="todo" />
           <button>Add todo</button>

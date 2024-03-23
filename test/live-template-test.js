@@ -31,7 +31,7 @@ describe('render template', () => {
   it('sends click events', async () => {
     const el = await fixture(`
     <live-template>
-      <button data-thing="wut" @click="sendEvent('wuzzle', event)"></button>
+      <button data-thing="wut" :onclick="sendEvent('wuzzle')"></button>
     </live-template>
     `);
     setupLiveState(el);    
@@ -46,7 +46,7 @@ describe('render template', () => {
   it('sends form events', async () => {
     const el = await fixture(`
     <live-template>
-      <form @submit="sendEvent('it', event)">
+      <form :onsubmit="sendEvent('it')">
         <input name="foo" value="bar" />
         <input name="bar" value="wuzzle" />
         <button type="submit">save</button>

@@ -1,7 +1,5 @@
-import templize, {directive} from 'templize/templize.js';
 import LiveState from 'phx-live-state';
 import { registerContext, observeContext } from 'wc-context';
-import { parse, NodeTemplatePart, TemplateInstance } from 'template-parts'
 import sprae from 'sprae';
 
 export class LiveTemplateElement extends HTMLElement {
@@ -30,7 +28,7 @@ export class LiveTemplateElement extends HTMLElement {
     this.liveState.connect();
     this.liveState.addEventListener('livestate-change', ({ detail: { state } }) => {
       this.buildTemplate();
-      sprae(this, {...state, sendEvent: (n, e) => this.sendEvent(n, e)});
+      sprae(this, {...state, sendEvent: (n) => (e) => this.sendEvent(n, e)});
     });
   }
 
@@ -53,7 +51,6 @@ export class LiveTemplateElement extends HTMLElement {
       const data = Object.fromEntries(formData.entries());
       this['liveState'].pushEvent(eventName, data);
     } else {
-      console.log(e);
       this['liveState'].pushEvent(eventName, e.target.dataset)
     }
     e.preventDefault();
