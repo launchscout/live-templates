@@ -14,9 +14,10 @@
     "test:watch": "web-test-runner --watch"
   },
   "dependencies": {
+    "@preact/signals-core": "^1.6.0",
     "http-server": "^14.1.1",
     "phx-live-state": "^0.11.2",
-    "sprae": "^9.0.1",
+    "sprae": "9.0.1",
     "wc-context": "^1.0.0"
   },
   "devDependencies": {
