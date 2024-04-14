@@ -1,0 +1,77 @@
+<html>
+
+  <script async src="https://ga.jspm.io/npm:es-module-shims@1.8.3/dist/es-module-shims.js" crossorigin="anonymous"></script>
+<script type="importmap">
+{
+  "imports": {
+    "lit": "https://ga.jspm.io/npm:lit@3.1.2/index.js",
+    "phx-live-state": "https://ga.jspm.io/npm:phx-live-state@0.11.2/build/src/index.js",
+    "sprae": "https://ga.jspm.io/npm:sprae@9.0.1/sprae.js",
+    "wc-context": "https://ga.jspm.io/npm:wc-context@1.0.0/core.js"
+  },
+  "scopes": {
+    "https://ga.jspm.io/": {
+      "@lit/reactive-element": "https://ga.jspm.io/npm:@lit/reactive-element@2.0.4/development/reactive-element.js",
+      "json-joy/esm/json-patch": "https://ga.jspm.io/npm:json-joy@1.19.0/esm/json-patch/index.js",
+      "lit-element/lit-element.js": "https://ga.jspm.io/npm:lit-element@4.0.4/development/lit-element.js",
+      "lit-html": "https://ga.jspm.io/npm:lit-html@3.1.2/development/lit-html.js",
+      "lit-html/is-server.js": "https://ga.jspm.io/npm:lit-html@3.1.2/development/is-server.js",
+      "phoenix": "https://ga.jspm.io/npm:phoenix@1.6.15/priv/static/phoenix.mjs",
+      "process": "https://ga.jspm.io/npm:@jspm/core@2.0.1/nodelibs/browser/process.js",
+      "reflect-metadata": "https://ga.jspm.io/npm:reflect-metadata@0.1.14/Reflect.js",
+      "subscript": "https://ga.jspm.io/npm:subscript@7.6.2/subscript.js",
+      "subscript/justin": "https://ga.jspm.io/npm:subscript@8.3.4/justin.js",
+      "swapdom": "https://ga.jspm.io/npm:swapdom@1.2.1/inflate.js",
+      "ulive": "https://ga.jspm.io/npm:ulive@1.0.1/dist/ulive.es.js"
+    }
+  }
+}
+</script>
+<script type="module">
+    import './src/live-template.js';
+    import './simple-field.js';
+  </script>
+</head>
+
+<body>
+  <live-template url="ws://localhost:4000/live_state" topic="people:all">
+    <table>
+      <thead>
+        <tr>
+          <th><a :sendclick="sort" data-sort-key="last_name">Last name</a></th>
+          <th>First name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr :each="person in people">
+          <td><a :sendclick="edit-person" :data-id="person.id" :text="person.last_name"></a></td>
+          <td :text="person.first_name"></td>
+          <td :text="person.birth_date"></td>
+        </tr>
+      </tbody>
+    </table>
+    <button :sendclick="add-person">Add Person</button>
+    <dialog :open="editing">
+      <form :sendsubmit="save-person">
+        <div>
+          <label>First name</label>
+          <input name="first_name" :value="person.first_name"/>
+          <span :text="errors.first_name"></span>
+        </div>
+        <div>
+          <label>Last name</label>
+          <input name="last_name" :value="person.last_name"/>
+          <span :text="errors.last_name"></span>
+        </div>
+        <div>
+          <label>Birth date</label>
+          <input name="birth_date" type="date" :value="person.birth_date"/>
+          <span :text="errors.birth_date"></span>
+        </div>
+        <button>Save</button>
+      </form>
+    </dialog>
+  </live-template>
+</body>
+
+</html>

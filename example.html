@@ -31,6 +31,6 @@
     <ul>
       <li :each="todo in todos" :text="todo"></li>
     </ul>
-    <button @click="sendEvent('bob', event)">butt</button>
+    <button :onclick="sendEvent('bob', event)">butt</button>
   </live-template>
 </html>

@@ -1,6 +1,6 @@
 import LiveState from 'phx-live-state';
 import { registerContext, observeContext } from 'wc-context';
-import sprae from 'sprae';
+import sprae, { directive } from 'sprae';
 
 export class LiveTemplateElement extends HTMLElement {
   connectedCallback() {
@@ -28,7 +28,10 @@ export class LiveTemplateElement extends HTMLElement {
     this.liveState.connect();
     this.liveState.addEventListener('livestate-change', ({ detail: { state } }) => {
       this.buildTemplate();
-      sprae(this, {...state, sendEvent: (n) => (e) => this.sendEvent(n, e)});
+      directive.sendclick = this.sendEventDirective('click');
+      directive.sendsubmit = this.sendEventDirective('submit');
+      directive.sendinput = this.sendEventDirective('input');
+      sprae(this, { ...state, sendEvent: (n) => (e) => this.sendEvent(n, e) });
     });
   }
 
@@ -36,6 +39,20 @@ export class LiveTemplateElement extends HTMLElement {
     const template = this.querySelector("template");
     if (template) {
       this.replaceChildren(template.content);
+    }
+  }
+
+  sendEventDirective(eventName) {
+    return (el, evaluate, state) => {
+      let removeOldListener;
+      return () => {
+        removeOldListener?.();
+        const handler = (e) => {
+          this.sendEvent(evaluate, e);
+        };
+        removeOldListener = () => el.removeEventListener(eventName, handler);
+        el.addEventListener(eventName, handler);
+      }
     }
   }
   

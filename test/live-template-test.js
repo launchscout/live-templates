@@ -63,6 +63,26 @@ describe('render template', () => {
     expect(pushCall.args[1].foo).to.equal('bar');
     expect(pushCall.args[1].bar).to.equal('wuzzle');
   });
+  it('sends events from directivs', async () => {
+    const el = await fixture(`
+    <live-template>
+      <form :sendsubmit="it">
+        <input name="foo" value="bar" />
+        <input name="bar" value="wuzzle" />
+        <button type="submit">save</button>
+      </form>
+    </live-template>
+    `);
+    setupLiveState(el);
+    const pushStub = sinon.stub();
+    el.liveState.pushEvent = pushStub;
+    const button = el.querySelector('button');
+    button.click();
+    const pushCall = pushStub.getCall(0);
+    expect(pushCall.args[0]).to.equal('it');
+    expect(pushCall.args[1].foo).to.equal('bar');
+    expect(pushCall.args[1].bar).to.equal('wuzzle');
+  });
 
   it('allows for nested templates and fallback content', async () => {
     const el = await fixture(`

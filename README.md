@@ -85,7 +85,25 @@ There a quite a few more, for the full list see the [sprae README](https://githu
 
 ## Sending events
 
-To send events to a LiveState backend, the `sendEvent()` function is provided and able to be called from event handlers in the template. It takes the name of the event to send to the channel, and will convert DOM events as follows:
+Sending events to the LiveState channel can be done declaratively or programmatically.
+
+### Declarative event sending
+
+Sprae directives have been added for several events:
+
+* :sendclick
+* :sendsubmit
+* :sendinput
+
+The value of the attribute for each will specify the event name to send to the LiveState channel, similar to LiveView `phx-*` attributes. Example:
+
+```html
+<button :sendclick="add-person">Add Person</button>
+```
+
+### Programmatic event sending
+
+To programmatically send events to a LiveState channel, the `sendEvent()` function is provided and able to be called from event handlers in the template. It takes the name of the event to send to the channel, and will convert DOM events as follows:
 
 * submit and input events will send the FormData and prevent the default event behaviour.
 * click events will send the dataset of the element (any `data-` attributes).
@@ -131,9 +149,13 @@ Example:
   </body>
 ```
 
-## Status
+## Demo
 
-live-templates should be considered alpha quality.
+The `silly_crm.html` shows a working CRUD example. It is a front end to the [silly_crm](http://github.com/superchris/silly_crm) project. To run it:
+
+1. Run the sillycrm project on localhost:4000 (instructions are in README)
+2. Run `npm start` in this project
+2. Go to http://localhost:8080/silly_crm.html
 
 ## Future plans
 
