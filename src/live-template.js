@@ -43,7 +43,7 @@ export class LiveTemplateElement extends HTMLElement {
   }
 
   sendEventDirective(eventName) {
-    return (el, evaluate, state) => {
+    const dir = (el, evaluate, state, name) => {
       let removeOldListener;
       return () => {
         removeOldListener?.();
@@ -54,6 +54,8 @@ export class LiveTemplateElement extends HTMLElement {
         el.addEventListener(eventName, handler);
       }
     }
+    dir.parse = (value) => value;
+    return dir;
   }
   
   sendEvent(eventName, e) {

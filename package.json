@@ -3,7 +3,7 @@
   "description": "",
   "license": "MIT",
   "author": "live-template",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "type": "module",
   "main": "index.js",
   "module": "index.js",
@@ -17,7 +17,7 @@
     "@preact/signals-core": "^1.6.0",
     "http-server": "^14.1.1",
     "phx-live-state": "^0.11.2",
-    "sprae": "9.0.1",
+    "sprae": "^9.1.1",
     "wc-context": "^1.0.0"
   },
   "devDependencies": {
