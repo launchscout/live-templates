@@ -107,7 +107,10 @@ To programmatically send events to a LiveState channel, the `sendEvent()` functi
 
 * submit and input events will send the FormData and prevent the default event behaviour.
 * click events will send the dataset of the element (any `data-` attributes).
-* (more to come)
+
+## Custom Events
+
+Use the `custom-events` attribute to specify a comma separated list of custom events that can be send. For each, a directive will be added with a prefix of `:send`, e. g. for a CustomEvent named `foo` a `:sendfoo` directive will let you send this event to LiveState.
 
 ## Adding fallback content and avoiding early renders
 
