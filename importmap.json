@@ -1,0 +1,24 @@
+{
+  "env": [
+    "browser",
+    "development",
+    "module"
+  ],
+  "imports": {
+    "phx-live-state": "https://ga.jspm.io/npm:phx-live-state@0.11.2/build/src/index.js",
+    "sprae": "https://ga.jspm.io/npm:sprae@9.0.1/sprae.js",
+    "wc-context": "https://ga.jspm.io/npm:wc-context@1.0.0/core.js"
+  },
+  "scopes": {
+    "https://ga.jspm.io/": {
+      "json-joy/esm/json-patch": "https://ga.jspm.io/npm:json-joy@1.19.0/esm/json-patch/index.js",
+      "phoenix": "https://ga.jspm.io/npm:phoenix@1.6.15/priv/static/phoenix.mjs",
+      "process": "https://ga.jspm.io/npm:@jspm/core@2.0.1/nodelibs/browser/process.js",
+      "reflect-metadata": "https://ga.jspm.io/npm:reflect-metadata@0.1.14/Reflect.js",
+      "subscript": "https://ga.jspm.io/npm:subscript@7.6.2/subscript.js",
+      "subscript/justin": "https://ga.jspm.io/npm:subscript@8.3.4/justin.js",
+      "swapdom": "https://ga.jspm.io/npm:swapdom@1.2.1/inflate.js",
+      "ulive": "https://ga.jspm.io/npm:ulive@1.0.1/dist/ulive.es.js"
+    }
+  }
+}

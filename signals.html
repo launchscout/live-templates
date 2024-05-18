@@ -1,0 +1,48 @@
+<head>
+
+  <script async src="https://ga.jspm.io/npm:es-module-shims@1.8.3/dist/es-module-shims.js" crossorigin="anonymous"></script>
+  <script type="importmap">
+  {
+    "imports": {
+      "@preact/signals-core": "https://ga.jspm.io/npm:@preact/signals-core@1.6.0/dist/signals-core.module.js",
+      "phx-live-state": "https://ga.jspm.io/npm:phx-live-state@0.11.2/build/src/index.js",
+      "solid-js": "https://ga.jspm.io/npm:solid-js@1.8.16/dist/dev.js"
+    },
+    "scopes": {
+      "https://ga.jspm.io/": {
+        "json-joy/esm/json-patch": "https://ga.jspm.io/npm:json-joy@1.19.0/esm/json-patch/index.js",
+        "phoenix": "https://ga.jspm.io/npm:phoenix@1.6.15/priv/static/phoenix.mjs",
+        "process": "https://ga.jspm.io/npm:@jspm/core@2.0.1/nodelibs/browser/process.js",
+        "reflect-metadata": "https://ga.jspm.io/npm:reflect-metadata@0.1.14/Reflect.js",
+        "subscript": "https://ga.jspm.io/npm:subscript@7.6.2/subscript.js",
+        "wc-context": "https://ga.jspm.io/npm:wc-context@1.0.0/core.js"
+      }
+    }
+  }
+  </script>
+  <script type="module">
+    import { createSignal } from 'solid-js';
+    import { signal, effect } from "@preact/signals-core";
+    import LiveState from 'phx-live-state';
+
+    function createLiveSignal(liveState, initialState) {
+      const stateSignal = signal({people: []});
+      liveState.addEventListener('state:change', ({ detail: {state} }) => {
+        stateSignal.value = state;
+      })
+      return stateSignal;
+    }
+    const liveState = new LiveState({ url: 'ws://localhost:4000/live_state', topic: 'people:all' });
+    liveState.connect();
+    const state = createLiveSignal(liveState, {});
+    effect(() => {
+      const {people} = state.value;
+      console.log(state.value);
+      console.log(`There are ${people?.length} people.`);
+    });
+  </script>
+</head>
+
+<body>
+  <h1>hi</h1>
+</body>

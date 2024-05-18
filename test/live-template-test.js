@@ -84,6 +84,27 @@ describe('render template', () => {
     expect(pushCall.args[1].bar).to.equal('wuzzle');
   });
 
+  it('sends custom events with element data', async () => {
+    const el = await fixture(`
+    <live-template custom-events="bar,bang">
+      <span id="foo" data-wuzzle="blarg" :sendbar="bar" :sendbang="bang"></span>
+    </live-template>
+    `);
+    setupLiveState(el);
+    const pushStub = sinon.stub();
+    el.liveState.pushEvent = pushStub;
+    const span = el.querySelector('#foo');
+    span.dispatchEvent(new CustomEvent('bar', {detail: {bing: 'bong'}, bubbles: true}))
+    span.dispatchEvent(new CustomEvent('bang', {detail: {wuzzle: 'overwrite'}, bubbles: true}))
+    const pushCall = pushStub.getCall(0);
+    expect(pushCall.args[0]).to.equal('bar');
+    expect(pushCall.args[1].bing).to.equal('bong');
+    expect(pushCall.args[1].wuzzle).to.equal('blarg');
+    const secondCall = pushStub.getCall(1);
+    expect(secondCall.args[0]).to.equal('bang');
+    expect(secondCall.args[1].wuzzle).to.equal('overwrite');
+  });
+
   it('allows for nested templates and fallback content', async () => {
     const el = await fixture(`
     <live-template>

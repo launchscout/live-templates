@@ -22,15 +22,23 @@ export class LiveTemplateElement extends HTMLElement {
       }
       this.connectLiveState();
     }
+    directive.sendclick = this.sendEventDirective('click');
+    directive.sendsubmit = this.sendEventDirective('submit');
+    directive.sendinput = this.sendEventDirective('input');
+    if (this.getAttribute('custom-events')) {
+      const customEvents = this.getAttribute('custom-events').split(',');
+      for (const customEvent of customEvents) {
+        console.log('adding directive for', customEvent);
+        directive[`send${customEvent}`] = this.sendEventDirective(customEvent);
+      }
+    }
   }
 
   connectLiveState() {
     this.liveState.connect();
     this.liveState.addEventListener('livestate-change', ({ detail: { state } }) => {
+      console.log('got state', state);
       this.buildTemplate();
-      directive.sendclick = this.sendEventDirective('click');
-      directive.sendsubmit = this.sendEventDirective('submit');
-      directive.sendinput = this.sendEventDirective('input');
       sprae(this, { ...state, sendEvent: (n) => (e) => this.sendEvent(n, e) });
     });
   }
@@ -57,7 +65,7 @@ export class LiveTemplateElement extends HTMLElement {
     dir.parse = (value) => value;
     return dir;
   }
-  
+
   sendEvent(eventName, e) {
     if (e instanceof SubmitEvent) {
       const form = e.target;
@@ -65,10 +73,14 @@ export class LiveTemplateElement extends HTMLElement {
       const data = Object.fromEntries(formData.entries());
       this['liveState'].pushEvent(eventName, data);
     } else if (e instanceof InputEvent) {
-      const form = e.target.form;
-      const formData = new FormData(form);
-      const data = Object.fromEntries(formData.entries());
-      this['liveState'].pushEvent(eventName, data);
+      const input = e.target;
+      const payload = {};
+      payload[input.getAttribute('name')] = input.value;
+      this['liveState'].pushEvent(eventName, payload);
+    } else if (e instanceof CustomEvent) {
+      const detail = e.detail;
+      const payload = Object.assign({}, e.target.dataset, detail);
+      this['liveState'].pushEvent(eventName, payload);
     } else {
       this['liveState'].pushEvent(eventName, e.target.dataset)
     }
